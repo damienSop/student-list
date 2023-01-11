@@ -1,0 +1,22 @@
+version: "3.1"
+services:
+  local-registry:
+    image: registry:2
+    ports:
+      - "5001:5000"
+    networks:
+      - student_age_network
+    environment:
+      - REGISTRY_STORAGE_DELETE_ENABLED=true
+  registry-ui:
+    image: joxit/docker-registry-ui:static
+    ports:
+      - "8090:80"
+    environment:
+      - REGISTRY_URL=http://local-registry:5001
+      - DELETE_IMAGES=true
+      - REGISTRY_TITLE=student-list-images 
+    networks:
+      - student_age_network
+networks:
+  student_age_network:
